@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.workHangGround.dao.WorkHangGroundMapper">
+	
+	<select id="listForPage" resultType="net.chenlin.dp.modules.workHangGround.entity.WorkHangGroundEntity">
+		SELECT
+			`id`, 
+			`hang_ground_name`, 
+			`hang_ground_area`, 
+			`hang_ground_start_time`, 
+			`hang_ground_end_time`, 
+			`work_type`, 
+			`status`, 
+			`remark`, 
+			`user_id_create`, 
+			`gmt_create`, 
+			`gmt_modified`
+		FROM
+			work_hang_ground
+		ORDER BY
+			id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO work_hang_ground (
+			`hang_ground_name`, 
+			`hang_ground_area`, 
+			`hang_ground_start_time`, 
+			`hang_ground_end_time`, 
+			`work_type`, 
+			`status`, 
+			`remark`, 
+			`user_id_create`, 
+			`gmt_create`, 
+			`gmt_modified`
+		)
+		VALUES (
+			#{hangGroundName}, 
+			#{hangGroundArea}, 
+			#{hangGroundStartTime}, 
+			#{hangGroundEndTime}, 
+			#{workType}, 
+			#{status}, 
+			#{remark}, 
+			#{userIdCreate}, 
+			#{gmtCreate}, 
+			#{gmtModified}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="net.chenlin.dp.modules.workHangGround.entity.WorkHangGroundEntity">
+		SELECT
+			`id`, 
+			`hang_ground_name`, 
+			`hang_ground_area`, 
+			`hang_ground_start_time`, 
+			`hang_ground_end_time`, 
+			`work_type`, 
+			`status`, 
+			`remark`, 
+			`user_id_create`, 
+			`gmt_create`, 
+			`gmt_modified`
+		FROM
+			work_hang_ground
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE work_hang_ground
+	 	<set>
+			<if test="hangGroundName != null">`hang_ground_name` = #{hangGroundName}, </if>
+			<if test="hangGroundArea != null">`hang_ground_area` = #{hangGroundArea}, </if>
+			<if test="hangGroundStartTime != null">`hang_ground_start_time` = #{hangGroundStartTime}, </if>
+			<if test="hangGroundEndTime != null">`hang_ground_end_time` = #{hangGroundEndTime}, </if>
+			<if test="workType != null">`work_type` = #{workType}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="userIdCreate != null">`user_id_create` = #{userIdCreate}, </if>
+			<if test="gmtCreate != null">`gmt_create` = #{gmtCreate}, </if>
+			<if test="gmtModified != null">`gmt_modified` = #{gmtModified}</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			work_hang_ground
+		WHERE
+			id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

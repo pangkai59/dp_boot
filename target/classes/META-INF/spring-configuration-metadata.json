@@ -1,0 +1,12 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "net.chenlin.dp.druid.DynamicDataSourceConfig",
+      "name": "spring.datasource.druid.default",
+      "sourceMethod": "defaultDataSource()",
+      "type": "javax.sql.DataSource"
+    }
+  ],
+  "properties": []
+}

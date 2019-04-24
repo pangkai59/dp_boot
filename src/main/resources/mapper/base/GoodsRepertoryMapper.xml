@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.goods.dao.GoodsRepertoryMapper">
+	
+	<select id="listForPage" resultType="net.chenlin.dp.modules.goods.entity.GoodsRepertoryEntity">
+		SELECT
+			`id`, 
+			`name`, 
+			`type`, 
+			`date`, 
+			`status`
+		FROM
+			goods_repertory g
+		<where>
+			<if test="name != null and name.trim() != ''">
+				AND g.name LIKE concat('%',#{name},'%')
+			</if>
+		</where>
+		ORDER BY
+			id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO goods_repertory (
+			`name`, 
+			`type`, 
+			`date`, 
+			`status`
+		)
+		VALUES (
+			#{name}, 
+			#{type}, 
+			#{date}, 
+			#{status}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="net.chenlin.dp.modules.goods.entity.GoodsRepertoryEntity">
+		SELECT
+			`id`, 
+			`name`, 
+			`type`, 
+			`date`, 
+			`status`
+		FROM
+			goods_repertory
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE goods_repertory
+	 	<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="date != null">`date` = #{date}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			goods_repertory
+		WHERE
+			id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

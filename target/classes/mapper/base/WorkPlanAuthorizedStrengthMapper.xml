@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.workPlanAuthorizedStrength.dao.WorkPlanAuthorizedStrengthMapper">
+	
+	<select id="listForPage" resultType="net.chenlin.dp.modules.workPlanAuthorizedStrength.entity.WorkPlanAuthorizedStrengthEntity">
+		SELECT
+			`id`, 
+			`plan_id`, 
+			`work_describe`, 
+			`start_work_time`, 
+			`end_work_time`, 
+			`work_site`, 
+			`work_dep`, 
+			`plan_type`, 
+			`status`, 
+			`check`, 
+			`for_check`, 
+			`appear`, 
+			`subscrible`, 
+			`work_type`, 
+			`remark`, 
+			`user_id_create`, 
+			`gmt_create`, 
+			`gmt_modified`
+		FROM
+			work_plan_authorized_strength
+		ORDER BY
+			id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO work_plan_authorized_strength (
+			`plan_id`, 
+			`work_describe`, 
+			`start_work_time`, 
+			`end_work_time`, 
+			`work_site`, 
+			`work_dep`, 
+			`plan_type`, 
+			`status`, 
+			`check`, 
+			`for_check`, 
+			`appear`, 
+			`subscrible`, 
+			`work_type`, 
+			`remark`, 
+			`user_id_create`, 
+			`gmt_create`, 
+			`gmt_modified`
+		)
+		VALUES (
+			#{planId}, 
+			#{workDescribe}, 
+			#{startWorkTime}, 
+			#{endWorkTime}, 
+			#{workSite}, 
+			#{workDep}, 
+			#{planType}, 
+			#{status}, 
+			#{check}, 
+			#{forCheck}, 
+			#{appear}, 
+			#{subscrible}, 
+			#{workType}, 
+			#{remark}, 
+			#{userIdCreate}, 
+			#{gmtCreate}, 
+			#{gmtModified}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="net.chenlin.dp.modules.workPlanAuthorizedStrength.entity.WorkPlanAuthorizedStrengthEntity">
+		SELECT
+			`id`, 
+			`plan_id`, 
+			`work_describe`, 
+			`start_work_time`, 
+			`end_work_time`, 
+			`work_site`, 
+			`work_dep`, 
+			`plan_type`, 
+			`status`, 
+			`check`, 
+			`for_check`, 
+			`appear`, 
+			`subscrible`, 
+			`work_type`, 
+			`remark`, 
+			`user_id_create`, 
+			`gmt_create`, 
+			`gmt_modified`
+		FROM
+			work_plan_authorized_strength
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE work_plan_authorized_strength
+	 	<set>
+			<if test="planId != null">`plan_id` = #{planId}, </if>
+			<if test="workDescribe != null">`work_describe` = #{workDescribe}, </if>
+			<if test="startWorkTime != null">`start_work_time` = #{startWorkTime}, </if>
+			<if test="endWorkTime != null">`end_work_time` = #{endWorkTime}, </if>
+			<if test="workSite != null">`work_site` = #{workSite}, </if>
+			<if test="workDep != null">`work_dep` = #{workDep}, </if>
+			<if test="planType != null">`plan_type` = #{planType}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="check != null">`check` = #{check}, </if>
+			<if test="forCheck != null">`for_check` = #{forCheck}, </if>
+			<if test="appear != null">`appear` = #{appear}, </if>
+			<if test="subscrible != null">`subscrible` = #{subscrible}, </if>
+			<if test="workType != null">`work_type` = #{workType}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="userIdCreate != null">`user_id_create` = #{userIdCreate}, </if>
+			<if test="gmtCreate != null">`gmt_create` = #{gmtCreate}, </if>
+			<if test="gmtModified != null">`gmt_modified` = #{gmtModified}</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			work_plan_authorized_strength
+		WHERE
+			id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

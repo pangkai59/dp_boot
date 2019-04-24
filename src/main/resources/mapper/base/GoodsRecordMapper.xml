@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.goods.dao.GoodsRecordMapper">
+	
+	<select id="listForPage" resultType="net.chenlin.dp.modules.goods.entity.GoodsRecordEntity">
+		SELECT
+			`id`, 
+			`project_name`, 
+			`record_name`, 
+			`start_time`, 
+			`accessory`
+		FROM
+			goods_record g
+		<where>
+			<if test="name != null and name.trim() != ''">
+				AND g.project_name LIKE concat('%',#{name},'%')
+			</if>
+		</where>
+		ORDER BY
+			id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO goods_record (
+			`project_name`, 
+			`record_name`, 
+			`start_time`, 
+			`accessory`
+		)
+		VALUES (
+			#{projectName}, 
+			#{recordName}, 
+			#{startTime}, 
+			#{accessory}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="net.chenlin.dp.modules.goods.entity.GoodsRecordEntity">
+		SELECT
+			`id`, 
+			`project_name`, 
+			`record_name`, 
+			`start_time`, 
+			`accessory`
+		FROM
+			goods_record
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE goods_record
+	 	<set>
+			<if test="projectName != null">`project_name` = #{projectName}, </if>
+			<if test="recordName != null">`record_name` = #{recordName}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="accessory != null">`accessory` = #{accessory}</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			goods_record
+		WHERE
+			id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

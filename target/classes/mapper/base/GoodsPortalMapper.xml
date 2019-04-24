@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.goods.dao.GoodsPortalMapper">
+	
+	<select id="listForPage" resultType="net.chenlin.dp.modules.goods.entity.GoodsPortalEntity">
+		SELECT
+			`id`, 
+			`name`, 
+			`type`, 
+			`date`, 
+			`person`
+		FROM
+			goods_portal g
+		<where>
+			<if test="name != null and name.trim() != ''">
+				AND g.name LIKE concat('%',#{name},'%')
+			</if>
+		</where>
+		ORDER BY
+			id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO goods_portal (
+			`name`, 
+			`type`, 
+			`date`, 
+			`person`
+		)
+		VALUES (
+			#{name}, 
+			#{type}, 
+			#{date}, 
+			#{person}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="net.chenlin.dp.modules.goods.entity.GoodsPortalEntity">
+		SELECT
+			`id`, 
+			`name`, 
+			`type`, 
+			`date`, 
+			`person`
+		FROM
+			goods_portal
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE goods_portal
+	 	<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="date != null">`date` = #{date}, </if>
+			<if test="person != null">`person` = #{person}</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			goods_portal
+		WHERE
+			id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
